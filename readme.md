@@ -23,6 +23,73 @@ LemonTemplate_Unmount('调用名称');
  */
 LemonTemplate_Active('调用名称');
 ```
+### 调用示例
+假设有ID为`QQLogin`的插件
+```php
+/**
+ * 注册插件
+ */
+RegisterPlugin('QQLogin', 'ActivePlugin_QQLogin');
+
+/**
+ * 激活插件工具
+ */
+function ActivePlugin_QQLogin() {
+    global $actions;
+
+    $actions['QQLogin'] = '6';
+    Add_Filter_Plugin('Filter_Plugin_ViewAuto_Begin', 'QQLogin_Plugin_ViewAuto_Begin');
+    Add_Filter_Plugin('Filter_Plugin_Cmd_Begin', 'QQLogin_Plugin_Cmd_Begin');
+}
+
+/**
+ * 激活插件时，会被执行的方法
+ */
+function InstallPlugin_QQLogin() {
+    LemonTemplate_Mount('QQLogin', 'QQLogin', 'plugin', 'template');
+}
+
+/**
+ * 禁用插件时，会被执行的方法
+ */
+function UninstallPlugin_QQLogin() {
+    LemonTemplate_Unmount('QQLogin');
+}
+
+/**
+ * 假设将页面入口挂载在cmd中
+ */
+function QQLogin_Plugin_Cmd_Begin() {
+    global $zbp;
+    
+    $action = GetVars('act', 'GET');
+    if ($action == 'QQLogin') {
+        LemonTemplate_Active('QQLogin');
+        $zbp->template->SetTags('title', 'QQ登录');
+        $zbp->template->SetTags('type', 'QQLogin');
+        $zbp->template->SetTemplate('login');
+        $zbp->template->Display();
+    }
+}
+
+/**
+ * 假设将页面入口挂载在ViewAuto中
+ */
+function QQLogin_Plugin_ViewAuto_Begin($url) {
+    global $zbp;
+
+    if ($url == '/QQLogin') {
+        LemonTemplate_Active('QQLogin');
+        $zbp->template->SetTags('title', 'QQ登录');
+        $zbp->template->SetTags('type', 'QQLogin');
+        $zbp->template->SetTemplate('login');
+        $zbp->template->Display();
+        // 阻断后面系统的处理
+        $GLOBALS['hooks']['Filter_Plugin_ViewAuto_Begin']['QQLogin_Plugin_ViewAuto_Begin'] = 'return';
+    }
+}
+```
+如果是当前主题的默认模板，只用在`InstallPlugin`中挂载，`UninstallPlugin_QQLogin`中卸载即可
 
 ## 语法
 与ZBlogPHP原有的模板语法一致，额外增加子文件夹处理  
