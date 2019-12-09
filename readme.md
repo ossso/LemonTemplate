@@ -46,6 +46,8 @@ function ActivePlugin_QQLogin() {
  * 激活插件时，会被执行的方法
  */
 function InstallPlugin_QQLogin() {
+    // 自动激活LemonTemplate - 如果未安装，提示用户
+    QQLogin_ActiveRelatedPlugin();
     LemonTemplate_Mount('QQLogin', 'QQLogin', 'plugin', 'template');
 }
 
@@ -86,6 +88,28 @@ function QQLogin_Plugin_ViewAuto_Begin($url) {
         $zbp->template->Display();
         // 阻断后面系统的处理
         $GLOBALS['hooks']['Filter_Plugin_ViewAuto_Begin']['QQLogin_Plugin_ViewAuto_Begin'] = 'return';
+    }
+}
+
+/**
+ * 激活关联插件
+ */
+function QQLogin_ActiveRelatedPlugin() {
+    global $zbp;
+    $relationPlugin = array(
+        array('LemonTemplate', '模板插件 - Lemon系列'),
+    );
+    $plugins = $zbp->option['ZC_USING_PLUGIN_LIST'];
+    foreach ($relationPlugin as $item) {
+        $name = $item[0];
+        if (!HasNameInString($plugins, $name)) {
+            $app = $zbp->LoadApp('plugin', $name);
+            if ($app->id == $name) {
+                EnablePlugin($name);
+            } else {
+                $zbp->SetHint('bad', '请安装并启用插件“' . $item[1] . '” - ID:' . $item[0]);
+            }
+        }
     }
 }
 ```
