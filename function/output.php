@@ -36,7 +36,7 @@ function LemonTemplate_OutputTemplateSelect() {
     }
 
     $tpl = new LemonTemplate();
-    $tpl->Init($zbp->theme, 'theme', 'template');
+    $tpl->Init($zbp->theme, $zbp->theme, 'theme', 'template');
     if (!$tpl->tplNoteFilePathStat) {
         return null;
     }
@@ -46,7 +46,7 @@ function LemonTemplate_OutputTemplateSelect() {
     <textarea style="display: none;" id="LemonTemplate_templates">' . $ops . '</textarea>
     <script>
     !function() {
-        document.getElementByID("cmbTemplate").innerHTML = document.getElementById("LemonTemplate_templates").value;
+        document.getElementById("cmbTemplate").innerHTML = document.getElementById("LemonTemplate_templates").value;
     }();
     </script>
     ';
@@ -58,7 +58,7 @@ function LemonTemplate_OutputTemplateSelect() {
         <textarea style="display: none;" id="LemonTemplate_templates2">' . $ops . '</textarea>
         <script>
         !function() {
-            document.getElementByID("#cmbLogTemplate").innerHTML = document.getElementById("LemonTemplate_templates2").value;
+            document.getElementById("#cmbLogTemplate").innerHTML = document.getElementById("LemonTemplate_templates2").value;
         }();
         </script>
         ';

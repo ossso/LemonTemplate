@@ -2,8 +2,8 @@
 <plugin version="php">
 <id>LemonTemplate</id>
 <name>模板插件 - lemon</name>
-<url>https://lemon.zblogphp.com/plugins/template</url>
-<note>Lemon系列插件</note>
+<url>https://github.com/ossso/LemonTemplate</url>
+<note>Lemon系列插件 - 让每一个应用都可以写模板</note>
 <description></description>
 <path>main.php</path>
 <include>include.php</include>
@@ -11,7 +11,7 @@
 <author>
   <name>橙色阳光</name>
   <email>1122@hizhou.cn</email>
-  <url></url>
+  <url>https://www.inull.cn/</url>
 </author>
 <source>
   <name></name>
@@ -21,7 +21,7 @@
 <adapted>151935</adapted>
 <version>1.0</version>
 <pubdate>2019-11-30</pubdate>
-<modified>2019-11-30</modified>
+<modified>2020-03-22</modified>
 <price>0</price>
 <phpver>5.5</phpver>
 <advanced>
