@@ -59,6 +59,7 @@ window.lmtplCompile = function(watchName) {
             <tbody>
                 <?php
                     $list = $zbp->Config('LemonTemplateWatch')->list;
+                    $list = is_array($list) ? $list : array();
                     foreach ($list as $k => $item) {
                         echo '<tr>
                             <td>' . $k . '</td>
